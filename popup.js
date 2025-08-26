@@ -18,10 +18,27 @@ document.getElementById('summarize-button').addEventListener("click",()=>{
                 }
                 try {
                     const summary = await getGeminiSummary(articleText, summaryType, geminiApiKey);
-                    resultDiv.textContent = summary;
+                    const plainSummary = stripMarkdown(summary);
+                    resultDiv.textContent = plainSummary;
                 } catch (e) {
                     resultDiv.innerHTML = "Failed to summarize article.";
                 }
+function stripMarkdown(md) {
+    if (!md) return '';
+    return md
+        .replace(/^\s*[-*+]\s+/gm, '')
+        .replace(/^\s*\d+\.\s+/gm, '') 
+        .replace(/([*_]{1,3})(\S.*?\S)\1/g, '$2')
+        .replace(/`{1,3}[^`]*`{1,3}/g, '')
+        .replace(/~~(.*?)~~/g, '$1')
+        .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+        .replace(/\[[^\]]*\]\([^)]*\)/g, '$1')
+        .replace(/#+\s*(.*)/g, '$1')
+        .replace(/>\s?/g, '')
+        .replace(/\r?\n{2,}/g, '\n') 
+        .replace(/\r?\n/g, '\n')
+        .trim();
+}
             });
         });
     });
