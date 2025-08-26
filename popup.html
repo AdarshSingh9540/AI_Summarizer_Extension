@@ -1,0 +1,55 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Summarizer</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .options {
+            margin: 20px;
+        }
+
+        select,
+        button {
+            padding: 10px;
+            margin-right: 10px;
+        }
+
+        #summary-output {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+
+  <body >
+    <div class="options">
+      <select id="summary-type">
+        <option value="brief">Brief</option>
+        <option value="detailed">Detailed</option>
+        <option value="custom">Bullet Points</option>
+      </select>
+
+      <button id="summarize-button">Summarize</button>
+      <button id="copy-button">Copy</button>
+    </div>
+
+    <!-- <pre id="summary-output">select a type click Summarizer....</pre> -->
+
+    <div id="result">select a type click Summarizer....</div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
