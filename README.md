@@ -6,6 +6,12 @@ This is a Chrome extension that helps you summarize articles on the web. Instead
 
 ![AI Article Summarizer](icon.png)
 
+## Demo
+
+Watch this video to see how the extension works:
+
+[![AI Article Summarizer Demo](https://cdn.loom.com/sessions/thumbnails/6daf5310fc944dd5a5c3e8c902fe1ec6-with-play.gif)](https://www.loom.com/share/6daf5310fc944dd5a5c3e8c902fe1ec6?sid=7025386a-2935-4d9e-8b17-1eceacb9c23c)
+
 ## Features
 
 - **Side Panel Interface**: Opens from the right side of your browser, similar to Apollo.io
