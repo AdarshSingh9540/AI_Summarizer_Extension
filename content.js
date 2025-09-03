@@ -6,18 +6,15 @@ function getArticleText() {
     return paragraphs.map(p => p.innerText).join("\n");
 }
 
-// Create and handle side panel
 let sidePanel = null;
 let isVisible = false;
 
 function createSidePanel() {
-    // Check if panel already exists
     if (sidePanel) {
         toggleSidePanel();
         return;
     }
 
-    // Create side panel container
     sidePanel = document.createElement('div');
     sidePanel.id = 'ai-summarizer-panel';
     sidePanel.style.cssText = `
@@ -32,7 +29,6 @@ function createSidePanel() {
         box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
     `;
 
-    // Create the iframe
     const iframe = document.createElement('iframe');
     iframe.style.cssText = `
         width: 100%;
@@ -43,10 +39,8 @@ function createSidePanel() {
     iframe.src = chrome.runtime.getURL('sidepanel.html');
     sidePanel.appendChild(iframe);
 
-    // Add the panel to the body
     document.body.appendChild(sidePanel);
     
-    // Show the panel
     setTimeout(() => {
         sidePanel.style.transform = 'translateX(0)';
         isVisible = true;
@@ -78,7 +72,6 @@ function removeSidePanel() {
     }, 300);
 }
 
-// Listen for messages
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "GET_ARTICLE_TEXT") {
         const articleText = getArticleText();

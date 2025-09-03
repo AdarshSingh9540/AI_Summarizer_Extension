@@ -1,4 +1,3 @@
-// Get the summary from Gemini API
 async function getGeminiSummary(articleText, summaryType, apiKey) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
   
@@ -22,7 +21,6 @@ async function getGeminiSummary(articleText, summaryType, apiKey) {
   return data?.candidates?.[0]?.content?.parts?.[0]?.text || "No summary returned.";
 }
 
-// Clean up markdown formatting but preserve bullet points for the "custom" type
 function stripMarkdown(md) {
   if (!md) return '';
   
@@ -55,14 +53,11 @@ function stripMarkdown(md) {
   }
 }
 
-// Initialize the side panel
 document.addEventListener('DOMContentLoaded', () => {
-  // Close panel button
   document.getElementById('close-panel').addEventListener('click', () => {
     chrome.runtime.sendMessage({ action: "CLOSE_PANEL" });
   });
 
-  // Summarize button
   document.getElementById('summarize-button').addEventListener('click', () => {
     const resultDiv = document.getElementById('result');
     const summaryType = document.getElementById('summary-type').value;
@@ -74,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Get the article text from the main content script
       chrome.runtime.sendMessage({ action: "GET_ARTICLE_TEXT" }, async (response) => {
         const articleText = response?.articleText;
         
@@ -99,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Copy button
   document.getElementById('copy-button').addEventListener('click', () => {
     const resultDiv = document.getElementById('result');
     const text = resultDiv.innerText;
