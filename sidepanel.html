@@ -141,21 +141,22 @@
       }
 
       #summarize-button {
-        background: #4285f4;
+        background: #191919;
         color: #ffffff;
       }
 
       #summarize-button:hover {
-        background: #3367d6;
+        background: black;
       }
 
       #copy-button {
-        background: #34a853;
-        color: #ffffff;
+        background: #ffffff;
+        color: #191919;
+        border: 1px solid #e0e0e0;
       }
 
       #copy-button:hover {
-        background: #2e7d49;
+        background: #f1f5f9;
       }
 
       .panel-content {
@@ -180,23 +181,39 @@
       #result li {
         margin-bottom: 8px;
       }
-
       .loader {
-        border: 3px solid #e2e8f0;
-        border-top: 3px solid #4285f4;
-        border-radius: 50%;
-        width: 28px;
-        height: 28px;
-        animation: spin 1s linear infinite;
-        margin: 32px auto;
+        position: relative;
+        width: 64px;
+        height: 64px;
+        background-color: rgba(0, 0, 0, 0.5);
+        transform: rotate(45deg);
+        overflow: hidden;
+        margin: 40px auto;
+        display: block;
       }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
+      .loader:after {
+        content: "";
+        position: absolute;
+        inset: 8px;
+        margin: auto;
+        background: #222b32;
+      }
+      .loader:before {
+        content: "";
+        position: absolute;
+        inset: -15px;
+        margin: auto;
+        background: #de3500;
+        animation: diamondLoader 2s linear infinite;
+      }
+      @keyframes diamondLoader {
+        0%,
+        10% {
+          transform: translate(-64px, -64px) rotate(-45deg);
         }
+        90%,
         100% {
-          transform: rotate(360deg);
+          transform: translate(0px, 0px) rotate(-45deg);
         }
       }
 
