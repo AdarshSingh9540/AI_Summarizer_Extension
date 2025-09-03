@@ -9,7 +9,6 @@
         "storage"
     ],
     "action":{
-        "default_popup": "popup.html",
         "default_icon":"icon.jpg"
     },
 
@@ -25,6 +24,12 @@
     "options_page": "options.html",
     "host_permissions": [
         "<all_urls>"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["sidepanel.html", "sidepanel.js"],
+            "matches": ["<all_urls>"]
+        }
     ]
 
 
