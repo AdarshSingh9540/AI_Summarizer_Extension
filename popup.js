@@ -21,7 +21,7 @@ document.getElementById('summarize-button').addEventListener("click",()=>{
                     const plainSummary = stripMarkdown(summary);
                     
                     if (summaryType === "custom") {
-                        // For bullet points, use innerHTML and preserve line breaks
+                       
                         resultDiv.innerHTML = plainSummary.replace(/\n/g, '<br>');
                     } else {
                         resultDiv.textContent = plainSummary;
@@ -32,14 +32,10 @@ document.getElementById('summarize-button').addEventListener("click",()=>{
 function stripMarkdown(md) {
     if (!md) return '';
     
-    // Preserve bullet points and numbered lists if summary type is "custom"
     if (document.getElementById("summary-type").value === "custom") {
         return md
-            // Convert markdown bullet points to HTML bullet points
             .replace(/^\s*[-*+]\s+/gm, '• ')
-            // Convert markdown numbered lists to formatted numbered lists
             .replace(/^\s*(\d+)\.\s+/gm, '$1. ')
-            // Remove emphasis formatting (bold/italic)
             .replace(/([*_]{1,3})(\S.*?\S)\1/g, '$2')
             .replace(/`{1,3}[^`]*`{1,3}/g, '')
             .replace(/~~(.*?)~~/g, '$1')
@@ -49,7 +45,6 @@ function stripMarkdown(md) {
             .replace(/>\s?/g, '')
             .trim();
     } else {
-        // Original behavior for other summary types
         return md
             .replace(/^\s*[-*+]\s+/gm, '')
             .replace(/^\s*\d+\.\s+/gm, '') 
@@ -97,7 +92,6 @@ async function getGeminiSummary(articleText, summaryType, apiKey) {
 
 document.getElementById("copy-button").addEventListener("click", () => {
     const resultDiv = document.getElementById("result");
-    // Use innerText which preserves the displayed formatting including bullet points
     const text = resultDiv.innerText;
     if (text && text.trim() !== "" && text !== "Select a type and click Summarize...") {
         navigator.clipboard.writeText(text);
