@@ -36,7 +36,7 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["sidepanel.html", "sidepanel.js"],
+            "resources": ["sidepanel.html", "sidepanel.js", "icon.png"],
             "matches": ["<all_urls>"]
         }
     ]
