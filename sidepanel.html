@@ -43,7 +43,7 @@
       }
 
       .panel-title::before {
-        content: "✨";
+        /* content: "✨"; */
         margin-right: 8px;
         font-size: 1.1rem;
       }
@@ -125,7 +125,6 @@
         background: #059669;
       }
 
-
       .panel-content {
         flex: 1;
         padding: 16px;
@@ -140,7 +139,6 @@
         white-space: pre-wrap;
         word-break: break-word;
       }
-
 
       .loader {
         border: 3px solid #e2e8f0;
@@ -178,12 +176,21 @@
         background-color: #fef3c7;
         color: #92400e;
       }
+
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
+      }
     </style>
   </head>
   <body>
     <div class="panel-container">
       <div class="panel-header">
-        <div class="panel-title">AI Article Summarizer</div>
+        <div class="panel-title">
+          <img class="logo-icon" src="./icon.png" alt="" /> AI Article
+          Summarizer
+        </div>
         <button class="panel-close" id="close-panel">×</button>
       </div>
       <div class="panel-controls">
