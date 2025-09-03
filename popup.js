@@ -19,25 +19,51 @@ document.getElementById('summarize-button').addEventListener("click",()=>{
                 try {
                     const summary = await getGeminiSummary(articleText, summaryType, geminiApiKey);
                     const plainSummary = stripMarkdown(summary);
-                    resultDiv.textContent = plainSummary;
+                    
+                    if (summaryType === "custom") {
+                        // For bullet points, use innerHTML and preserve line breaks
+                        resultDiv.innerHTML = plainSummary.replace(/\n/g, '<br>');
+                    } else {
+                        resultDiv.textContent = plainSummary;
+                    }
                 } catch (e) {
                     resultDiv.innerHTML = "Failed to summarize article.";
                 }
 function stripMarkdown(md) {
     if (!md) return '';
-    return md
-        .replace(/^\s*[-*+]\s+/gm, '')
-        .replace(/^\s*\d+\.\s+/gm, '') 
-        .replace(/([*_]{1,3})(\S.*?\S)\1/g, '$2')
-        .replace(/`{1,3}[^`]*`{1,3}/g, '')
-        .replace(/~~(.*?)~~/g, '$1')
-        .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
-        .replace(/\[[^\]]*\]\([^)]*\)/g, '$1')
-        .replace(/#+\s*(.*)/g, '$1')
-        .replace(/>\s?/g, '')
-        .replace(/\r?\n{2,}/g, '\n') 
-        .replace(/\r?\n/g, '\n')
-        .trim();
+    
+    // Preserve bullet points and numbered lists if summary type is "custom"
+    if (document.getElementById("summary-type").value === "custom") {
+        return md
+            // Convert markdown bullet points to HTML bullet points
+            .replace(/^\s*[-*+]\s+/gm, '• ')
+            // Convert markdown numbered lists to formatted numbered lists
+            .replace(/^\s*(\d+)\.\s+/gm, '$1. ')
+            // Remove emphasis formatting (bold/italic)
+            .replace(/([*_]{1,3})(\S.*?\S)\1/g, '$2')
+            .replace(/`{1,3}[^`]*`{1,3}/g, '')
+            .replace(/~~(.*?)~~/g, '$1')
+            .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+            .replace(/\[[^\]]*\]\([^)]*\)/g, '$1')
+            .replace(/#+\s*(.*)/g, '$1')
+            .replace(/>\s?/g, '')
+            .trim();
+    } else {
+        // Original behavior for other summary types
+        return md
+            .replace(/^\s*[-*+]\s+/gm, '')
+            .replace(/^\s*\d+\.\s+/gm, '') 
+            .replace(/([*_]{1,3})(\S.*?\S)\1/g, '$2')
+            .replace(/`{1,3}[^`]*`{1,3}/g, '')
+            .replace(/~~(.*?)~~/g, '$1')
+            .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+            .replace(/\[[^\]]*\]\([^)]*\)/g, '$1')
+            .replace(/#+\s*(.*)/g, '$1')
+            .replace(/>\s?/g, '')
+            .replace(/\r?\n{2,}/g, '\n') 
+            .replace(/\r?\n/g, '\n')
+            .trim();
+    }
 }
             });
         });
@@ -47,7 +73,14 @@ function stripMarkdown(md) {
 
 async function getGeminiSummary(articleText, summaryType, apiKey) {
     const url =  `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-    const prompt = `Summarize the following article in a ${summaryType} way:\n\n${articleText}`;
+    
+    let prompt;
+    if (summaryType === "custom") {
+        prompt = `Summarize the following article in a clear, organized format with bullet points. Use • or numbers (1., 2., etc.) at the beginning of each point. Make each point distinct and start on a new line:\n\n${articleText}`;
+    } else {
+        prompt = `Summarize the following article in a ${summaryType} way:\n\n${articleText}`;
+    }
+    
     const body = {
         contents: [{ parts: [{ text: prompt }] }]
     };
@@ -64,6 +97,7 @@ async function getGeminiSummary(articleText, summaryType, apiKey) {
 
 document.getElementById("copy-button").addEventListener("click", () => {
     const resultDiv = document.getElementById("result");
+    // Use innerText which preserves the displayed formatting including bullet points
     const text = resultDiv.innerText;
     if (text && text.trim() !== "" && text !== "Select a type and click Summarize...") {
         navigator.clipboard.writeText(text);
